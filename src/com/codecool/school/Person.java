@@ -13,7 +13,6 @@ public abstract class Person {
         this.birthDate = birthDate;
     }
 
-
     public String getName() {
         return name;
     }
@@ -35,6 +34,15 @@ public abstract class Person {
     }
 
     public abstract void update();
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", birthDate='" + birthDate + '\'' +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -8,7 +8,11 @@ public class Mentor extends Staff {
     private final Set<Language> languages = new HashSet<>();
     private Module moduleTeaching;
 
-    public Mentor() {}
+    public Mentor(String name, String phoneNumber, String birthDate) {
+        super(name, phoneNumber, birthDate);
+        this.setSalary(3000.0);
+    }
+
 
     public void addLanguage(Language newLanguage) {
         languages.add(newLanguage);
@@ -22,8 +26,10 @@ public class Mentor extends Staff {
     public boolean assignToModule(Module module) {
         if (knowsLanguage(module.getLanguage())){
             this.moduleTeaching = module;
+            System.out.println(this.getName() + " was successfully assigned to " + moduleTeaching);
             return true;
         } else {
+            System.out.println("Oops. We cannot assign " + this.getName() + " to " + module);
             return false;
         }
     }

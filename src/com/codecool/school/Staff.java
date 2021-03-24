@@ -2,12 +2,22 @@ package com.codecool.school;
 
 import java.util.Objects;
 
-public abstract class Staff extends Person{
+public abstract class Staff extends Person {
     private double salary;
 
     public Staff(String name, String phoneNumber, String birthDate) {
         super(name, phoneNumber, birthDate);
+        this.setSalary(2500.0);
     }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -23,12 +33,5 @@ public abstract class Staff extends Person{
         return Objects.hash(super.hashCode(), salary);
     }
 
-
-    public double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
 }
+
