@@ -1,18 +1,44 @@
 package com.codecool.school;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Mentor extends Staff {
     private final Set<Language> languages = new HashSet<>();
     private Module moduleTeaching;
+    private List<Language> availableLanguages;
 
     public Mentor(String name, String phoneNumber, String birthDate) {
         super(name, phoneNumber, birthDate);
         this.setSalary(3000.0);
+        this.availableLanguages = new ArrayList<>() {{
+           addLanguage(Language.PYTHON);
+           addLanguage(Language.WEB);
+           addLanguage(Language.JAVA_SE);
+           addLanguage(Language.JAVA_EE);
+        }};
+
     }
 
+
+    private Language getRandomLanguage(){
+        int setSize = availableLanguages.size();
+        if (setSize != 0) {
+            int itemIndex = ThreadLocalRandom.current().nextInt(setSize);
+            Language language = availableLanguages.get(itemIndex);
+            availableLanguages.remove(language);
+
+            return language;
+        }
+
+        return null;
+    }
+
+    private Module getRandomModule(){
+        int itemIndex = ThreadLocalRandom.current().nextInt(Module.values().length);
+
+        return Module.values()[itemIndex];
+    }
 
     public void addLanguage(Language newLanguage) {
         languages.add(newLanguage);
@@ -36,7 +62,15 @@ public class Mentor extends Staff {
 
     @Override
     public void update() {
+        // 8% chance to have finished learning a new language
+        boolean learnNewLanguage = ThreadLocalRandom.current().nextInt(25) <= 0;
+        Language newLanguage = getRandomLanguage();
+        Module newModule = getRandomModule();
 
+        if(learnNewLanguage && newLanguage != null) {
+            languages.add(newLanguage);
+        }
+        assignToModule(newModule);
     }
 
     @Override

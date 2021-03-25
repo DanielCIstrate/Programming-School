@@ -36,18 +36,23 @@ public class Student extends Person{
     public void update() {
         if (progress < 100) {
             setProgress(progress + 20);
-        } else {
+            System.out.println("Student " + this.getName() + " has progressed by " +
+                    this.getProgress() + "%") ;
+        } else if (getProgress() == 100) {
             Optional<Module> studentStatus = Optional.ofNullable(moduleLearning);
             studentStatus.ifPresentOrElse(
-                    (studyingModule)
+                    (module)
                             -> {
-                        moduleLearning.nextModule();
+                        setModuleLearning(moduleLearning.nextModule());
+                        System.out.println("Student " + this.getName() +
+                                " has advanced to " + this.getModuleLearning());
                     },
 
                     ()
                             -> {
                         System.out.println(getName() + " has finished school.");
                     });
+
 
         }
 

@@ -1,6 +1,7 @@
 package com.codecool.school;
 
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Staff extends Person {
     private double salary;
@@ -17,7 +18,6 @@ public abstract class Staff extends Person {
     public void setSalary(double salary) {
         this.salary = salary;
     }
-
 
     @Override
     public boolean equals(Object o) {

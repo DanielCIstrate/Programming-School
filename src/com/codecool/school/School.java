@@ -1,12 +1,12 @@
 package com.codecool.school;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 public class School {
     private Set<Staff> employees = new HashSet<>();
-    private Set<Mentor> mentors = new HashSet<>();
-    private Set<Student> students = new HashSet<>();
+    public static Set<Student> STUDENTS = new HashSet<>();
 
     public static void main (String[] args) {
         School codecool = new School();
@@ -35,22 +35,18 @@ public class School {
         adam.addLanguage(Language.JAVA_EE);
         codecool.hireEmployee(adam);
 
-        //Testing correct assignment of Adam
-        adam.assignToModule(Module.OOP);
-        adam.assignToModule(Module.ADVANCED);
-
-        //Testing failed assignment to Web
-        adam.assignToModule(Module.WEB);
+        //Adding Ana - SALESPERSON
+        SalesPerson ana = new SalesPerson("Ana Paraschiv","021 444 5555","30.05.1997");
+        codecool.hireEmployee(ana);
 
 
-        //Show students in OOP
-        codecool.listStudentsInModule(Module.OOP);
+        codecool.simulateForPeriodOfMonths(12);
 
 
     }
 
     public void listStudentsInModule(Module module) {
-        students.forEach(student -> {
+        STUDENTS.forEach(student -> {
             if (student.getModuleLearning().equals(module))
                 System.out.println(student.toString());
         });
@@ -58,13 +54,35 @@ public class School {
 
     public void addStudent(Student newStudent) {
         if (newStudent != null)
-            students.add(newStudent);
+            STUDENTS.add(newStudent);
     }
 
     public void hireEmployee(Staff newEmployee) {
         if (newEmployee != null) {
             employees.add(newEmployee);
             System.out.println(newEmployee.getName() + " was hired");
+        }
+    }
+
+    private void simulateForPeriodOfMonths(int monthNumber) {
+
+
+        Set<Mentor> mentors = new HashSet<>();
+        Set<SalesPerson> salesPeople = new HashSet<>();
+        employees.forEach(employee -> {
+            if (employee instanceof SalesPerson)
+                salesPeople.add((SalesPerson) employee);
+            else if (employee instanceof Mentor)
+                mentors.add((Mentor) employee);
+        });
+
+
+        for (int i = 0; i < monthNumber;i++) {
+            System.out.println("Month " + (i+1));
+            STUDENTS.forEach(Student::update);
+            mentors.forEach(Mentor::update);
+            salesPeople.forEach(SalesPerson::update);
+            System.out.println("============//============//============");
         }
     }
 
